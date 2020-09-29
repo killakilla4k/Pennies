@@ -1,0 +1,88 @@
+package com.github.killakilla4k.Pennies;
+import java.util.Scanner;
+
+public class Pennies {
+
+	public static void main(String[] args) {
+		
+		Scanner input = new Scanner(System.in);
+		int r;
+		//this while loop lets the program cycle after it prints the last line of code
+		while(true) {
+		//gets the radius
+		System.out.println("Enter the radius of the circle (Enter 0 to close the program)");
+		r = input.nextInt();
+		if(r == 0) {
+			//closes the program when the user inputs 0 as said in the instructions
+			System.exit(0);
+		}
+		
+		//finds all integer lattice points in the circle
+		//integer lattice points are where you can place the pennies
+		System.out.println(integerPoints(r) + " pennies will fit within the circle");
+		
+		
+		}
+		
+	}
+
+	public static int integerPoints(int r) {
+		int y;
+		int ySquared;
+		int counter = 4;
+		//finds how many integer lattice points are there for value of x=0 (y-axis), not including points on the circumference
+				counter = counter + (2*r-1);
+				for(int x = 1; x < r; x++) {
+					//just the normal circle formula, except here we do not solve for y^1
+					ySquared = r*r - x*x;
+					//here we store root ySquared as an integer
+					y = (int) Math.sqrt(ySquared);
+					//15 in place of an arbitrary number
+					//root 15 stored as an int when squared does not give you 15, so this checks if the max point is an integer 
+					//(not to be confused with the data type int)
+					if(y*y == ySquared) {
+						counter = counter + 4;
+						
+					}
+				} 
+			
+	
+		//starts at 1 since x with value 0 is handled by line 34
+		for(int x=1; x<r;x++) {
+			//x^2 + y^2 = r^2 --> y^2 = r^2 - x^2
+			//finds max value of y for that x value, since it is an int it rounds down itself
+			ySquared = r*r - x*x;
+			y = (int) Math.sqrt(ySquared);
+			if(y*y == ySquared) {
+				//incase the x value has an integer lattice point on the circumference, this will take it out
+				//this subtraction happens before all the multiplications and what not, so it carries over
+				y= y-1;
+			}
+			
+			// + 2 for x intercepts of all possible x values, + 2 since there is a negative equivalent
+			//y*4 since for each max value of y for a certain x value, there is a negative counter part / min value, and then the same number
+			//for the negative x value, so 2*2 = *4
+			//we are still in the for loop, so all these modifiers happen for each positive integer x coordinate within r
+			counter = counter + y*4 + 2;
+		}
+		
+		
+		
+		
+		
+		return counter;
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+}
+
